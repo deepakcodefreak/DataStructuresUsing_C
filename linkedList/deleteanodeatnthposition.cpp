@@ -46,19 +46,24 @@ while(temp!=NULL){
 }
 
 void deleteatn(int n){
-//node *temp = new node();
-node *temp2 = new node();
-temp2 = head;
-//temp = head;
+    node *temp = new node();
+    node *temp2 = new node();
+    temp = head;
+
+    if (n==1){
+        head= head->next;
+        delete temp;
+        return ;
+    }
 
 for(int i=0;i<n-2;i++)
 {
-    temp2 = temp2->next;
+    temp = temp->next;
 }
 
-temp2->next = (temp2->next)->next;
-delete temp2;
-
+    temp2 = temp->next;
+    temp->next = (temp->next)->next;
+    delete temp2;
 }
 
 
@@ -69,7 +74,7 @@ int main()
     insert(3);
     insert(4);
     print();
-    deleteatn(2);
+    deleteatn(6);
     cout<<"\n";
     print();
     return 0;

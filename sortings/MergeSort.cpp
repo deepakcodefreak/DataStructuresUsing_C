@@ -42,8 +42,8 @@ void MergeSort(int *A,int n)
     if(n<2) return ;
 
     int mid = n/2;
-    int Left[mid];
-    int Right[n-mid];
+    int *Left = new int(mid);
+    int *Right = new int(n-mid);
 
     for(int i=0;i<mid;i++)
     {

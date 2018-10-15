@@ -1,3 +1,4 @@
+
 #include<iostream>
 
 using namespace std;
@@ -31,7 +32,6 @@ node* insert(node *root,int data)
 }
 
 int findMax(node *root){
-
     if(root==NULL)
     {
         cout<<"Tree is empty\n";
@@ -39,17 +39,17 @@ int findMax(node *root){
     }
 
     node *counter = root;
-    while(counter->right!=NULL)
+
+    if(counter->right==NULL)
     {
-        counter = counter->right;
+        return counter->data;
     }
 
-    return counter->data;
+    return findMax(counter->right);
 
 }
 
 int findMin(node *root){
-
     if(root==NULL)
     {
         cout<<"Tree is empty\n";
@@ -57,12 +57,14 @@ int findMin(node *root){
     }
 
     node *counter = root;
-    while(counter->left!=NULL)
+    if(counter->left == NULL)
     {
-        counter = counter->left;
+        return counter->data;
+
     }
 
-    return counter->data;
+    return findMin(counter->left);
+
 
 }
 

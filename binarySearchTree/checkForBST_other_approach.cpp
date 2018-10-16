@@ -1,7 +1,5 @@
-
 #include<iostream>
-#include<queue>
-
+#include<climits>
 
 using namespace std;
 
@@ -33,41 +31,23 @@ node* insert(node *root,int data)
         return root;
 }
 
-bool isSubTreeLesser(node *root, int value)
+
+bool isBSTutils(node *root, int minValue,int maxValue)
 {
     if(root == NULL) return true;
-    else if(root->data<=value
-    && isSubTreeLesser(root->left,value)
-    && isSubTreeLesser(root->right,value))
-    return true;
-    else
-    return false;
+    else if(root->data>minValue
+     && root->data<maxValue
+     && isBSTutils(root->left,minValue,root->data)
+     && isBSTutils(root->right,root->data,maxValue))
+     return true;
+     else return false;
 }
-
-bool isSubTreeGreater(node *root, int value)
-{
-    if(root == NULL) return true;
-    else if(root->data>value
-    && isSubTreeGreater(root->left,value)
-    && isSubTreeGreater(root->right,value))
-       return true;
-        else
-       return false;
-    }
-
-
 
 bool isBinarySearchTree(node *root)
 {
-    if(root == NULL) return true;
-
-    else if(isSubTreeLesser(root->left,root->data)
-    && isSubTreeGreater(root->right,root->data)
-    && isBinarySearchTree(root->left)
-    && isBinarySearchTree(root->right))
-    return true;
-    else return false;
+    return isBSTutils(root,INT_MIN,INT_MAX);
 }
+
 
 int main()
 {

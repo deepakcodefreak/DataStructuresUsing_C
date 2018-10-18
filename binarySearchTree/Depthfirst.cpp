@@ -40,46 +40,79 @@ void PreOrder(node *root)
     PreOrder(root->right);
 }
 
-void PostOrder(node *root)
+node* findMin(node *root)
 {
-    if(root == NULL) return ;
-    PostOrder(root->left);
-    PostOrder(root->right);
-    cout<<root->data<<" ";
-}
+    while(root->left!=NULL)
+    {
+        root = root->left;
+    }
+    return root;
 
-void inOrder(node *root)
-{
-    if(root == NULL) return ;
-    inOrder(root->left);
-    cout<<root->data<<" ";
-    inOrder(root->right);
 }
 
 
+node* Delete(node *root, int data)
+{
+    if(root == NULL) return root;
+    else if(data < root->data) root->left = Delete(root->left,data);
+    else if(data > root->data) root->right = Delete(root->right,data);
+    else
+    {
+        if(root->left == NULL && root->right == NULL)
+        {
+            delete root;
+            root = NULL;
+            //return root;
+        }
+        else if(root->left == NULL)
+        {
+            node *temp = root;
+            root = temp->right;
+            delete temp;
+            //return root;
+        }
+        else if(root->right == NULL)
+        {
+            node *temp = root;
+            root = temp->left;
+            delete temp;
+            //return root;
+        }
+        else
+        {
+            node *temp = findMin(root->right);
+            root->data = temp->data;
+            root->right = Delete(root->right,temp->data);
 
+            //return root;
+        }
+        return root;
+    }
+}
 
 
 int main()
 {
     node *root = NULL;
-    root = insert(root,10);
+    root = insert(root,12);
     root = insert(root,5);
+    root = insert(root,3);
+    root = insert(root,1);
+    root = insert(root,7);
+    root = insert(root,9);
+    root = insert(root,8);
+    root = insert(root,11);
     root = insert(root,15);
-    root = insert(root,2);
-    root = insert(root,25);
+    root = insert(root,13);
+    root = insert(root,14);
+    root = insert(root,17);
     root = insert(root,20);
-
+    root = insert(root,18);
     cout<<"PreOrder: "<<endl;
     PreOrder(root);
-
-    cout<<"\n\nPostOrder: "<<endl;
-    PostOrder(root);
-
-    cout<<"\n\ninOrder: "<<endl;
-    inOrder(root);
-
-
+    root = Delete(root,13);
+    cout<<endl<<"something deleted"<<endl;
+    PreOrder(root);
     return 0;
 }
 
